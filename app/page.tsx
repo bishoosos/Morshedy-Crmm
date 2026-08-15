@@ -1,5 +1,5 @@
 'use client';
-
+import LeadsSection from './components/LeadsSection'; // أو حسب المسار لديك
 import React, { useState, useRef } from 'react';
 import { toPng } from 'html-to-image';
 
@@ -437,15 +437,8 @@ export default function Home() {
         )}
 
         {/* LEADS TAB */}
-        {activeTab === 'leads' && (
-          <div className="max-w-5xl mx-auto bg-white border border-slate-200 rounded-2xl p-6 text-center space-y-4 shadow-sm">
-            <h3 className="text-lg font-bold text-blue-600">قسم إدارة سجلات العملاء (Leads Management)</h3>
-            <p className="text-slate-500 text-xs">هنا سيتم إضافة وتتبع العملاء ومراحل التواصل والمتابعة (Follow-up)</p>
-            <div className="p-12 border border-dashed border-slate-200 rounded-xl text-slate-400 text-xs">
-              🚧 جاهز لبناء السيكشن واستقبال البيانات 🚀
-            </div>
-          </div>
-        )}
+        {/* LEADS TAB */}
+{activeTab === 'leads' && <LeadsSection />}
 
         {/* INVENTORY TAB */}
         {activeTab === 'inventory' && (
