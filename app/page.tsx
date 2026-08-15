@@ -55,7 +55,10 @@ export default function Home() {
   const [discountPercent, setDiscountPercent] = useState(10);
   const [downPaymentPercent, setDownPaymentPercent] = useState(5);
   const [receiptPaymentPercent, setReceiptPaymentPercent] = useState(10);
-  const [receiptAfterMonths, setReceiptAfterMonths] = useState(10);
+  
+  // الخيار الجديد: تحديد وحدة الاستلام وقيمتها
+  const [receiptUnit, setReceiptUnit] = useState<'months' | 'years'>('months');
+  const [receiptValue, setReceiptValue] = useState(10);
 
   const handleProjectChange = (projectId: string) => {
     setSelectedProjectId(projectId);
@@ -76,6 +79,9 @@ export default function Home() {
       console.error('خطأ أثناء استخراج الصورة:', err);
     }
   };
+
+  // تحويل فترة الاستلام لشهر تلقائياً في جميع الحسابات
+  const receiptAfterMonths = receiptUnit === 'years' ? receiptValue * 12 : receiptValue;
 
   const effectiveArea = area + (roofArea * (roofRatio / 100)) + (gardenArea * (gardenRatio / 100)) + (terraceArea * (terraceRatio / 100));
   const totalPriceBeforeDiscount = effectiveArea * pricePerMeter;
@@ -102,7 +108,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-slate-100 text-slate-800 font-sans flex dir-rtl" dir="rtl">
       
-      {/* Sidebar - القائمة الجانبية بيضاء */}
+      {/* Sidebar - القائمة الجانبية */}
       <aside className="w-64 bg-white border-l border-slate-200 p-4 flex flex-col justify-between hidden md:flex shadow-sm">
         <div>
           <div className="flex items-center gap-3 px-2 py-4 border-b border-slate-100 mb-6">
@@ -261,10 +267,45 @@ export default function Home() {
                     <label className="block text-slate-500 mb-1">الاستلام (%):</label>
                     <input type="number" value={receiptPaymentPercent} onChange={(e) => setReceiptPaymentPercent(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded p-2 text-slate-800 font-semibold" />
                   </div>
+
+                  {/* خانة مدة الاستلام المحدثة بتبديل شهر/سنة */}
                   <div>
-                    <label className="block text-purple-700 mb-1 font-semibold">الاستلام بعد (شهر):</label>
-                    <input type="number" value={receiptAfterMonths} onChange={(e) => setReceiptAfterMonths(Number(e.target.value))} className="w-full bg-white border border-purple-200 rounded p-2 text-purple-700 font-bold" />
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="text-purple-700 font-bold text-[11px]">الاستلام بعد:</label>
+                      <div className="flex bg-slate-200 p-0.5 rounded-lg text-[10px]">
+                        <button
+                          type="button"
+                          onClick={() => setReceiptUnit('months')}
+                          className={`px-1.5 py-0.5 rounded font-bold transition ${
+                            receiptUnit === 'months' ? 'bg-purple-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                          }`}
+                        >
+                          شهر
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setReceiptUnit('years')}
+                          className={`px-1.5 py-0.5 rounded font-bold transition ${
+                            receiptUnit === 'years' ? 'bg-purple-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                          }`}
+                        >
+                          سنة
+                        </button>
+                      </div>
+                    </div>
+                    <div className="relative">
+                      <input 
+                        type="number" 
+                        value={receiptValue} 
+                        onChange={(e) => setReceiptValue(Number(e.target.value))} 
+                        className="w-full bg-white border border-purple-200 rounded p-2 text-purple-700 font-bold text-xs focus:outline-none focus:border-purple-500" 
+                      />
+                      <span className="absolute left-2 top-2 text-[10px] text-purple-400 font-semibold pointer-events-none">
+                        {receiptUnit === 'months' ? 'شهور' : 'سنوات'}
+                      </span>
+                    </div>
                   </div>
+
                   <div>
                     <label className="block text-emerald-700 mb-1 font-semibold">نسبة الخصم (%):</label>
                     <input type="number" value={discountPercent} onChange={(e) => setDiscountPercent(Number(e.target.value))} className="w-full bg-white border border-emerald-200 rounded p-2 text-emerald-700 font-bold" />
