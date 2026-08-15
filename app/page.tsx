@@ -100,16 +100,16 @@ export default function Home() {
   const yearlyInstallmentVal = remainingTotal > 0 ? yearlyPool / (years || 1) : 0;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans flex dir-rtl" dir="rtl">
+    <div className="min-h-screen bg-slate-100 text-slate-800 font-sans flex dir-rtl" dir="rtl">
       
-      {/* Sidebar */}
-      <aside className="w-64 bg-slate-900 border-l border-slate-800 p-4 flex flex-col justify-between hidden md:flex">
+      {/* Sidebar - القائمة الجانبية بيضاء */}
+      <aside className="w-64 bg-white border-l border-slate-200 p-4 flex flex-col justify-between hidden md:flex shadow-sm">
         <div>
-          <div className="flex items-center gap-3 px-2 py-4 border-b border-slate-800 mb-6">
+          <div className="flex items-center gap-3 px-2 py-4 border-b border-slate-100 mb-6">
             <span className="text-2xl">🏢</span>
             <div>
-              <h1 className="font-bold text-sm text-blue-400">Morshedy CRM</h1>
-              <p className="text-[10px] text-slate-400">نظام المبيعات الداخلي</p>
+              <h1 className="font-bold text-sm text-blue-600">Morshedy CRM</h1>
+              <p className="text-[10px] text-slate-500">نظام المبيعات الداخلي</p>
             </div>
           </div>
 
@@ -117,7 +117,7 @@ export default function Home() {
             <button
               onClick={() => setActiveTab('calculator')}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition ${
-                activeTab === 'calculator' ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800'
+                activeTab === 'calculator' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20' : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
               📊 حاسبة العروض والخصومات
@@ -125,7 +125,7 @@ export default function Home() {
             <button
               onClick={() => setActiveTab('leads')}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition ${
-                activeTab === 'leads' ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800'
+                activeTab === 'leads' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20' : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
               👥 إدارة العملاء (Leads)
@@ -133,7 +133,7 @@ export default function Home() {
             <button
               onClick={() => setActiveTab('inventory')}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition ${
-                activeTab === 'inventory' ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800'
+                activeTab === 'inventory' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20' : 'text-slate-600 hover:bg-slate-50'
               }`}
             >
               🏘️ قائمة أسعار المشاريع
@@ -141,62 +141,62 @@ export default function Home() {
           </nav>
         </div>
 
-        <div className="border-t border-slate-800 pt-4 px-2 text-[11px] text-slate-500">
+        <div className="border-t border-slate-100 pt-4 px-2 text-[11px] text-slate-400">
           فريق المبيعات المعتمد © 2026
         </div>
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto p-4 md:p-8">
-        <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-800">
+      <main className="flex-1 overflow-y-auto p-4 md:p-8 bg-slate-100">
+        <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-200">
           <div>
-            <h2 className="text-xl font-bold text-slate-100">
+            <h2 className="text-xl font-bold text-slate-800">
               {activeTab === 'calculator' && 'حاسبة عروض الأسعار السريعة'}
               {activeTab === 'leads' && 'قاعدة بيانات العملاء والتواصل'}
               {activeTab === 'inventory' && 'دليل مشاريع معمار المرشدي'}
             </h2>
-            <p className="text-xs text-slate-400 mt-0.5">لوحة تحكم مسؤول المبيعات</p>
+            <p className="text-xs text-slate-500 mt-0.5">لوحة تحكم مسؤول المبيعات</p>
           </div>
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span className="text-xs text-emerald-400 font-semibold">المحرك شغال</span>
+            <span className="text-xs text-emerald-600 font-semibold">المحرك شغال</span>
           </div>
         </div>
 
         {/* CALCULATOR TAB */}
         {activeTab === 'calculator' && (
           <div className="max-w-5xl mx-auto space-y-6">
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row gap-4 items-center justify-between shadow-sm">
               <div className="w-full md:w-1/2">
-                <label className="block text-xs text-slate-400 mb-1">اسم العميل:</label>
+                <label className="block text-xs text-slate-600 font-medium mb-1">اسم العميل:</label>
                 <input 
                   type="text" 
                   placeholder="أدخل اسم العميل..." 
                   value={clientName} 
                   onChange={(e) => setClientName(e.target.value)} 
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:border-blue-500 font-semibold"
                 />
               </div>
               <div className="w-full md:w-1/2">
-                <label className="block text-xs text-slate-400 mb-1">رقم تليفون العميل:</label>
+                <label className="block text-xs text-slate-600 font-medium mb-1">رقم تليفون العميل:</label>
                 <input 
                   type="text" 
                   placeholder="01xxxxxxxxx" 
                   value={clientPhone} 
                   onChange={(e) => setClientPhone(e.target.value)} 
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-blue-500"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:border-blue-500 font-semibold"
                 />
               </div>
             </div>
 
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-slate-800 pb-4 gap-4">
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-slate-100 pb-4 gap-4">
                 <div className="flex items-center gap-3">
-                  <label className="text-xs text-slate-400 font-bold">المشروع المحدد:</label>
+                  <label className="text-xs text-slate-700 font-bold">المشروع المحدد:</label>
                   <select 
                     value={selectedProjectId} 
                     onChange={(e) => handleProjectChange(e.target.value)}
-                    className="bg-slate-800 border border-blue-500/50 text-blue-300 text-xs font-bold rounded-xl p-2.5 focus:outline-none"
+                    className="bg-slate-50 border border-blue-500/30 text-blue-700 text-xs font-bold rounded-xl p-2.5 focus:outline-none shadow-sm"
                   >
                     {PROJECTS_DATA.map((proj) => (
                       <option key={proj.id} value={proj.id}>{proj.name}</option>
@@ -205,158 +205,159 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700/60 mb-6">
-                <h3 className="text-xs font-bold text-slate-300 mb-3">📐 تفاصيل المساحات (م²) ونسب الملحقات</h3>
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6">
+                <h3 className="text-xs font-bold text-slate-700 mb-3">📐 تفاصيل المساحات (م²) ونسب الملحقات</h3>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-sm mb-3">
                   <div>
-                    <label className="block text-xs text-slate-400 mb-1">الشقة:</label>
-                    <input type="number" value={area} onChange={(e) => setArea(Number(e.target.value))} className="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white font-bold text-xs" />
+                    <label className="block text-xs text-slate-500 mb-1">الشقة:</label>
+                    <input type="number" value={area} onChange={(e) => setArea(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded p-2 text-slate-800 font-bold text-xs" />
                   </div>
                   <div>
-                    <label className="block text-xs text-slate-400 mb-1">الروف:</label>
-                    <input type="number" value={roofArea} onChange={(e) => setRoofArea(Number(e.target.value))} className="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white text-xs" />
+                    <label className="block text-xs text-slate-500 mb-1">الروف:</label>
+                    <input type="number" value={roofArea} onChange={(e) => setRoofArea(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded p-2 text-slate-800 text-xs font-semibold" />
                   </div>
                   <div>
-                    <label className="block text-xs text-slate-400 mb-1">الحديقة:</label>
-                    <input type="number" value={gardenArea} onChange={(e) => setGardenArea(Number(e.target.value))} className="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white text-xs" />
+                    <label className="block text-xs text-slate-500 mb-1">الحديقة:</label>
+                    <input type="number" value={gardenArea} onChange={(e) => setGardenArea(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded p-2 text-slate-800 text-xs font-semibold" />
                   </div>
                   <div>
-                    <label className="block text-xs text-slate-400 mb-1">التراس:</label>
-                    <input type="number" value={terraceArea} onChange={(e) => setTerraceArea(Number(e.target.value))} className="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white text-xs" />
+                    <label className="block text-xs text-slate-500 mb-1">التراس:</label>
+                    <input type="number" value={terraceArea} onChange={(e) => setTerraceArea(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded p-2 text-slate-800 text-xs font-semibold" />
                   </div>
                   <div>
-                    <label className="block text-xs text-blue-300 mb-1">سعر المتر (جنية):</label>
-                    <input type="number" value={pricePerMeter} onChange={(e) => setPricePerMeter(Number(e.target.value))} className="w-full bg-slate-900 border border-blue-500/50 rounded p-2 text-blue-300 font-bold text-xs" />
+                    <label className="block text-xs text-blue-600 mb-1 font-bold">سعر المتر (جنية):</label>
+                    <input type="number" value={pricePerMeter} onChange={(e) => setPricePerMeter(Number(e.target.value))} className="w-full bg-white border border-blue-300 rounded p-2 text-blue-700 font-bold text-xs" />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3 pt-2 border-t border-slate-700/40 text-xs">
+                <div className="grid grid-cols-3 gap-3 pt-2 border-t border-slate-200 text-xs">
                   <div>
-                    <span className="text-slate-400">نسبة الروف: </span>
-                    <input type="number" value={roofRatio} onChange={(e) => setRoofRatio(Number(e.target.value))} className="w-12 bg-slate-900 border border-slate-700 rounded p-1 text-center text-yellow-400 font-bold" /> %
+                    <span className="text-slate-600">نسبة الروف: </span>
+                    <input type="number" value={roofRatio} onChange={(e) => setRoofRatio(Number(e.target.value))} className="w-12 bg-white border border-slate-200 rounded p-1 text-center text-amber-600 font-bold" /> %
                   </div>
                   <div>
-                    <span className="text-slate-400">نسبة الحديقة: </span>
-                    <input type="number" value={gardenRatio} onChange={(e) => setGardenRatio(Number(e.target.value))} className="w-12 bg-slate-900 border border-slate-700 rounded p-1 text-center text-yellow-400 font-bold" /> %
+                    <span className="text-slate-600">نسبة الحديقة: </span>
+                    <input type="number" value={gardenRatio} onChange={(e) => setGardenRatio(Number(e.target.value))} className="w-12 bg-white border border-slate-200 rounded p-1 text-center text-amber-600 font-bold" /> %
                   </div>
                   <div>
-                    <span className="text-slate-400">نسبة التراس: </span>
-                    <input type="number" value={terraceRatio} onChange={(e) => setTerraceRatio(Number(e.target.value))} className="w-12 bg-slate-900 border border-slate-700 rounded p-1 text-center text-yellow-400 font-bold" /> %
+                    <span className="text-slate-600">نسبة التراس: </span>
+                    <input type="number" value={terraceRatio} onChange={(e) => setTerraceRatio(Number(e.target.value))} className="w-12 bg-white border border-slate-200 rounded p-1 text-center text-amber-600 font-bold" /> %
                   </div>
                 </div>
               </div>
 
-              <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700/60 mb-6">
-                <h3 className="text-xs font-bold text-slate-300 mb-3">⚙️ شروط الدفع والخصومات</h3>
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6">
+                <h3 className="text-xs font-bold text-slate-700 mb-3">⚙️ شروط الدفع والخصومات</h3>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-xs">
                   <div>
-                    <label className="block text-slate-400 mb-1">السنوات:</label>
-                    <input type="number" value={years} onChange={(e) => setYears(Number(e.target.value))} className="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white font-bold" />
+                    <label className="block text-slate-500 mb-1">السنوات:</label>
+                    <input type="number" value={years} onChange={(e) => setYears(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded p-2 text-slate-800 font-bold" />
                   </div>
                   <div>
-                    <label className="block text-slate-400 mb-1">التعاقد (%):</label>
-                    <input type="number" value={downPaymentPercent} onChange={(e) => setDownPaymentPercent(Number(e.target.value))} className="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white" />
+                    <label className="block text-slate-500 mb-1">التعاقد (%):</label>
+                    <input type="number" value={downPaymentPercent} onChange={(e) => setDownPaymentPercent(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded p-2 text-slate-800 font-semibold" />
                   </div>
                   <div>
-                    <label className="block text-slate-400 mb-1">الاستلام (%):</label>
-                    <input type="number" value={receiptPaymentPercent} onChange={(e) => setReceiptPaymentPercent(Number(e.target.value))} className="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white" />
+                    <label className="block text-slate-500 mb-1">الاستلام (%):</label>
+                    <input type="number" value={receiptPaymentPercent} onChange={(e) => setReceiptPaymentPercent(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded p-2 text-slate-800 font-semibold" />
                   </div>
                   <div>
-                    <label className="block text-purple-300 mb-1">الاستلام بعد (شهر):</label>
-                    <input type="number" value={receiptAfterMonths} onChange={(e) => setReceiptAfterMonths(Number(e.target.value))} className="w-full bg-slate-900 border border-purple-500/50 rounded p-2 text-purple-300 font-bold" />
+                    <label className="block text-purple-700 mb-1 font-semibold">الاستلام بعد (شهر):</label>
+                    <input type="number" value={receiptAfterMonths} onChange={(e) => setReceiptAfterMonths(Number(e.target.value))} className="w-full bg-white border border-purple-200 rounded p-2 text-purple-700 font-bold" />
                   </div>
                   <div>
-                    <label className="block text-green-400 mb-1">نسبة الخصم (%):</label>
-                    <input type="number" value={discountPercent} onChange={(e) => setDiscountPercent(Number(e.target.value))} className="w-full bg-slate-900 border border-green-500/50 rounded p-2 text-green-400 font-bold" />
+                    <label className="block text-emerald-700 mb-1 font-semibold">نسبة الخصم (%):</label>
+                    <input type="number" value={discountPercent} onChange={(e) => setDiscountPercent(Number(e.target.value))} className="w-full bg-white border border-emerald-200 rounded p-2 text-emerald-700 font-bold" />
                   </div>
                 </div>
               </div>
 
-              <div ref={cardRef} className="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-6">
-                <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+              {/* CARD TO GENERATE IMAGE */}
+              <div ref={cardRef} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-md space-y-6">
+                <div className="flex justify-between items-center border-b border-slate-100 pb-3">
                   <div>
                     {clientName && (
-                      <span className="text-xs text-blue-400 font-bold block mb-1">مقدم للعميل: {clientName}</span>
+                      <span className="text-xs text-blue-600 font-bold block mb-1">مقدم للعميل: {clientName}</span>
                     )}
-                    <span className="text-xs text-slate-400 block">مشروع:</span>
-                    <h3 className="text-xl font-bold text-blue-400">{selectedProject.name}</h3>
+                    <span className="text-xs text-slate-500 block">مشروع:</span>
+                    <h3 className="text-xl font-bold text-blue-600">{selectedProject.name}</h3>
                   </div>
                   <div className="text-left">
-                    <span className="text-xs text-slate-400 block">المساحة الإجمالية:</span>
-                    <span className="text-md font-bold text-slate-200">{effectiveArea.toFixed(1)} م²</span>
+                    <span className="text-xs text-slate-500 block">المساحة الإجمالية:</span>
+                    <span className="text-md font-bold text-slate-800">{effectiveArea.toFixed(1)} م²</span>
                   </div>
                 </div>
 
-                <div className="bg-slate-900 p-4 rounded-xl border border-slate-800 grid grid-cols-2 md:grid-cols-6 gap-2 text-center">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 grid grid-cols-2 md:grid-cols-6 gap-2 text-center">
                   <div>
-                    <span className="text-[10px] text-slate-400 block">الإجمالي قبل الخصم</span>
+                    <span className="text-[10px] text-slate-500 block">الإجمالي قبل الخصم</span>
                     <span className="text-xs font-bold text-slate-400 line-through">{Math.round(totalPriceBeforeDiscount).toLocaleString()} ج.م</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-emerald-400 block">مبلغ الخصم ({discountPercent}%)</span>
-                    <span className="text-xs font-bold text-emerald-400">-{Math.round(discountAmount).toLocaleString()} ج.م</span>
+                    <span className="text-[10px] text-emerald-600 block font-semibold">مبلغ الخصم ({discountPercent}%)</span>
+                    <span className="text-xs font-bold text-emerald-600">-{Math.round(discountAmount).toLocaleString()} ج.م</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-green-400 block">الإجمالي بعد الخصم</span>
-                    <span className="text-sm font-extrabold text-green-400">{Math.round(totalPriceAfterDiscount).toLocaleString()} ج.م</span>
+                    <span className="text-[10px] text-emerald-700 block font-bold">الإجمالي بعد الخصم</span>
+                    <span className="text-sm font-extrabold text-emerald-700">{Math.round(totalPriceAfterDiscount).toLocaleString()} ج.م</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-blue-400 block">مقدم التعاقد ({downPaymentPercent}%)</span>
-                    <span className="text-xs font-bold text-blue-400">{Math.round(downPaymentAmount).toLocaleString()} ج.م</span>
+                    <span className="text-[10px] text-blue-600 block font-semibold">مقدم التعاقد ({downPaymentPercent}%)</span>
+                    <span className="text-xs font-bold text-blue-600">{Math.round(downPaymentAmount).toLocaleString()} ج.م</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-purple-400 block">دفعة الاستلام ({receiptPaymentPercent}%)</span>
-                    <span className="text-xs font-bold text-purple-400">{Math.round(receiptPaymentAmount).toLocaleString()} ج.م</span>
+                    <span className="text-[10px] text-purple-600 block font-semibold">دفعة الاستلام ({receiptPaymentPercent}%)</span>
+                    <span className="text-xs font-bold text-purple-600">{Math.round(receiptPaymentAmount).toLocaleString()} ج.م</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-yellow-400 block">المتبقي للتقسيط</span>
-                    <span className="text-xs font-bold text-yellow-400">{Math.round(remainingTotal).toLocaleString()} ج.م</span>
+                    <span className="text-[10px] text-amber-600 block font-semibold">المتبقي للتقسيط</span>
+                    <span className="text-xs font-bold text-amber-600">{Math.round(remainingTotal).toLocaleString()} ج.م</span>
                   </div>
                 </div>
 
                 <div className="space-y-4">
-                  <div className="bg-slate-900 border border-blue-500/20 rounded-xl p-4">
+                  <div className="bg-slate-50 border border-blue-100 rounded-xl p-4">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="font-bold text-blue-400 text-xs">النظام الأول: أقساط ربع سنوية متساوية</span>
-                      <span className="text-[10px] bg-blue-500/10 text-blue-300 px-2 py-0.5 rounded">كل 3 شهور</span>
+                      <span className="font-bold text-blue-700 text-xs">النظام الأول: أقساط ربع سنوية متساوية</span>
+                      <span className="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold">كل 3 شهور</span>
                     </div>
-                    <div className="grid grid-cols-3 gap-2 text-center mt-3 bg-slate-950/60 p-3 rounded-lg text-xs">
+                    <div className="grid grid-cols-3 gap-2 text-center mt-3 bg-white p-3 rounded-lg border border-slate-100 text-xs">
                       <div>
-                        <span className="text-slate-400 block text-[10px]">إجمالي الأقساط</span>
-                        <span className="font-bold text-xs text-white">{totalQuarters} قسط</span>
+                        <span className="text-slate-500 block text-[10px]">إجمالي الأقساط</span>
+                        <span className="font-bold text-xs text-slate-800">{totalQuarters} قسط</span>
                       </div>
                       <div>
-                        <span className="text-slate-400 block text-[10px]">قيمة القسط الربع سنوي</span>
-                        <span className="font-bold text-xs text-blue-400">{Math.round(quarterlyInstallmentVal).toLocaleString()} ج.م</span>
+                        <span className="text-slate-500 block text-[10px]">قيمة القسط الربع سنوي</span>
+                        <span className="font-bold text-xs text-blue-600">{Math.round(quarterlyInstallmentVal).toLocaleString()} ج.م</span>
                       </div>
                       <div>
-                        <span className="text-slate-400 block text-[10px]">أقساط قبل الاستلام</span>
-                        <span className="font-bold text-xs text-yellow-400">{quartersBeforeReceipt} أقساط</span>
+                        <span className="text-slate-500 block text-[10px]">أقساط قبل الاستلام</span>
+                        <span className="font-bold text-xs text-amber-600">{quartersBeforeReceipt} أقساط</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-slate-900 border border-purple-500/20 rounded-xl p-4">
+                  <div className="bg-slate-50 border border-purple-100 rounded-xl p-4">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="font-bold text-purple-400 text-xs">النظام الثاني: أقساط شهرية + دفعات سنوية</span>
-                      <span className="text-[10px] bg-purple-500/10 text-purple-300 px-2 py-0.5 rounded">مزدوج</span>
+                      <span className="font-bold text-purple-700 text-xs">النظام الثاني: أقساط شهرية + دفعات سنوية</span>
+                      <span className="text-[10px] bg-purple-100 text-purple-700 px-2 py-0.5 rounded font-bold">مزدوج</span>
                     </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-center mt-3 bg-slate-950/60 p-3 rounded-lg text-xs">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-center mt-3 bg-white p-3 rounded-lg border border-slate-100 text-xs">
                       <div>
-                        <span className="text-slate-400 block text-[10px]">القسط الشهري ({totalMonths} قسط)</span>
-                        <span className="font-bold text-xs text-purple-300">{Math.round(monthlyInstallmentVal).toLocaleString()} ج.م</span>
+                        <span className="text-slate-500 block text-[10px]">القسط الشهري ({totalMonths} قسط)</span>
+                        <span className="font-bold text-xs text-purple-600">{Math.round(monthlyInstallmentVal).toLocaleString()} ج.م</span>
                       </div>
                       <div>
-                        <span className="text-slate-400 block text-[10px]">القسط السنوي ({years} أقساط)</span>
-                        <span className="font-bold text-xs text-purple-400">{Math.round(yearlyInstallmentVal).toLocaleString()} ج.م</span>
+                        <span className="text-slate-500 block text-[10px]">القسط السنوي ({years} أقساط)</span>
+                        <span className="font-bold text-xs text-purple-700">{Math.round(yearlyInstallmentVal).toLocaleString()} ج.م</span>
                       </div>
                       <div>
-                        <span className="text-slate-400 block text-[10px]">دفعة الاستلام (بعد {receiptAfterMonths} شهر)</span>
-                        <span className="font-bold text-xs text-slate-200">{Math.round(receiptPaymentAmount).toLocaleString()} ج.م</span>
+                        <span className="text-slate-500 block text-[10px]">دفعة الاستلام (بعد {receiptAfterMonths} شهر)</span>
+                        <span className="font-bold text-xs text-slate-800">{Math.round(receiptPaymentAmount).toLocaleString()} ج.م</span>
                       </div>
                       <div>
-                        <span className="text-slate-400 block text-[10px]">وديعة الصيانة (10% بعد الخصم)</span>
-                        <span className="font-bold text-xs text-yellow-400">{Math.round(maintenanceAmount).toLocaleString()} ج.م</span>
+                        <span className="text-slate-500 block text-[10px]">وديعة الصيانة (10% بعد الخصم)</span>
+                        <span className="font-bold text-xs text-amber-600">{Math.round(maintenanceAmount).toLocaleString()} ج.م</span>
                       </div>
                     </div>
                   </div>
@@ -366,7 +367,7 @@ export default function Home() {
               <div className="mt-6 flex justify-end">
                 <button
                   onClick={handleDownloadImage}
-                  className="w-full md:w-auto bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-600/20 transition duration-200 flex items-center justify-center gap-2"
+                  className="w-full md:w-auto bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-6 py-3.5 rounded-xl shadow-md shadow-emerald-600/20 transition duration-200 flex items-center justify-center gap-2"
                 >
                   📥 تحميل كارت العرض للعميل (صورة)
                 </button>
@@ -377,10 +378,10 @@ export default function Home() {
 
         {/* LEADS TAB */}
         {activeTab === 'leads' && (
-          <div className="max-w-5xl mx-auto bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center space-y-4">
-            <h3 className="text-lg font-bold text-blue-400">قسم إدارة سجلات العملاء (Leads Management)</h3>
-            <p className="text-slate-400 text-xs">هنا سيتم إضافة وتتبع العملاء ومراحل التواصل والمتابعة (Follow-up)</p>
-            <div className="p-12 border border-dashed border-slate-800 rounded-xl text-slate-500 text-xs">
+          <div className="max-w-5xl mx-auto bg-white border border-slate-200 rounded-2xl p-6 text-center space-y-4 shadow-sm">
+            <h3 className="text-lg font-bold text-blue-600">قسم إدارة سجلات العملاء (Leads Management)</h3>
+            <p className="text-slate-500 text-xs">هنا سيتم إضافة وتتبع العملاء ومراحل التواصل والمتابعة (Follow-up)</p>
+            <div className="p-12 border border-dashed border-slate-200 rounded-xl text-slate-400 text-xs">
               🚧 جاهز لبناء السيكشن واستقبال البيانات 🚀
             </div>
           </div>
@@ -390,11 +391,11 @@ export default function Home() {
         {activeTab === 'inventory' && (
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-4">
             {PROJECTS_DATA.map((proj) => (
-              <div key={proj.id} className="bg-slate-900 border border-slate-800 p-4 rounded-xl flex justify-between items-center">
+              <div key={proj.id} className="bg-white border border-slate-200 p-4 rounded-xl flex justify-between items-center shadow-sm">
                 <div>
-                  <h4 className="font-bold text-sm text-blue-400">{proj.name}</h4>
-                  <p className="text-xs text-slate-400 mt-1">
-                    سعر المتر الافتراضي: <span className="text-white font-bold">{proj.defaultPrice.toLocaleString()} ج.م</span>
+                  <h4 className="font-bold text-sm text-blue-600">{proj.name}</h4>
+                  <p className="text-xs text-slate-500 mt-1">
+                    سعر المتر الافتراضي: <span className="text-slate-800 font-bold">{proj.defaultPrice.toLocaleString()} ج.م</span>
                   </p>
                 </div>
                 <button 
@@ -402,7 +403,7 @@ export default function Home() {
                     handleProjectChange(proj.id);
                     setActiveTab('calculator');
                   }}
-                  className="bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white text-xs font-bold px-3 py-1.5 rounded-lg transition"
+                  className="bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white text-xs font-bold px-3 py-1.5 rounded-lg transition border border-blue-200"
                 >
                   حساب السعر ←
                 </button>
