@@ -3,7 +3,15 @@
 import React, { useState, useRef } from 'react';
 import { toPng } from 'html-to-image';
 
-const PROJECTS_DATA = [
+interface Project {
+  id: string;
+  name: string;
+  defaultPrice: number;
+  monthlyRatio: number;
+  yearlyRatio: number;
+}
+
+const PROJECTS_DATA: Project[] = [
   { id: 'zahra', name: 'Zahra North Coast (زهرة)', defaultPrice: 111000, monthlyRatio: 25, yearlyRatio: 75 },
   { id: 'one_katameya', name: 'One Katameya (وان قطامية)', defaultPrice: 72700, monthlyRatio: 30, yearlyRatio: 70 },
   { id: 'degla_landmarks', name: 'Degla Landmarks (دجلة لاند مارك)', defaultPrice: 52800, monthlyRatio: 30, yearlyRatio: 70 },
@@ -24,15 +32,13 @@ const PROJECTS_DATA = [
 ];
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState<'calculator' | 'leads' | 'inventory'>('calculator');
   const cardRef = useRef<HTMLDivElement>(null);
-  const [activeTab, setActiveTab] = useState('calculator');
 
-  // بيانات العميل المخصص للعرض
   const [clientName, setClientName] = useState('');
   const [clientPhone, setClientPhone] = useState('');
 
-  // بيانات الحاسبة
-  const [selectedProjectId, setSelectedProjectId] = useState('zahra');
+  const [selectedProjectId, setSelectedProjectId] = useState<string>('zahra');
   const selectedProject = PROJECTS_DATA.find((p) => p.id === selectedProjectId) || PROJECTS_DATA[0];
 
   const [area, setArea] = useState(93);
@@ -41,9 +47,9 @@ export default function Home() {
   const [terraceArea, setTerraceArea] = useState(0);
   const [pricePerMeter, setPricePerMeter] = useState(selectedProject.defaultPrice);
 
-  const [roofRatio, setRoofRatio] = useState(20); 
-  const [gardenRatio, setGardenRatio] = useState(33); 
-  const [terraceRatio, setTerraceRatio] = useState(25); 
+  const [roofRatio, setRoofRatio] = useState(20);
+  const [gardenRatio, setGardenRatio] = useState(33);
+  const [terraceRatio, setTerraceRatio] = useState(25);
 
   const [years, setYears] = useState(7);
   const [discountPercent, setDiscountPercent] = useState(10);
@@ -54,13 +60,11 @@ export default function Home() {
   const handleProjectChange = (projectId: string) => {
     setSelectedProjectId(projectId);
     const proj = PROJECTS_DATA.find((p) => p.id === projectId);
-    if (proj) {
-      setPricePerMeter(proj.defaultPrice);
-    }
+    if (proj) setPricePerMeter(proj.defaultPrice);
   };
 
   const handleDownloadImage = async () => {
-    if (cardRef.current === null) return;
+    if (!cardRef.current) return;
     try {
       const dataUrl = await toPng(cardRef.current, { cacheBust: true });
       const link = document.createElement('a');
@@ -73,21 +77,16 @@ export default function Home() {
     }
   };
 
-  // الحسابات
-  const effectiveArea = 
-    area + 
-    (roofArea * (roofRatio / 100)) + 
-    (gardenArea * (gardenRatio / 100)) + 
-    (terraceArea * (terraceRatio / 100));
-
+  const effectiveArea = area + (roofArea * (roofRatio / 100)) + (gardenArea * (gardenRatio / 100)) + (terraceArea * (terraceRatio / 100));
   const totalPriceBeforeDiscount = effectiveArea * pricePerMeter;
   const discountAmount = totalPriceBeforeDiscount * (discountPercent / 100);
   const totalPriceAfterDiscount = totalPriceBeforeDiscount - discountAmount;
 
   const downPaymentAmount = totalPriceBeforeDiscount * (downPaymentPercent / 100);
   const receiptPaymentAmount = totalPriceBeforeDiscount * (receiptPaymentPercent / 100);
+
+  const remainingTotal = totalPriceBeforeDiscount - downPaymentAmount - receiptPaymentAmount - discountAmount;
   const maintenanceAmount = totalPriceAfterDiscount * 0.10;
-  const remainingTotal = totalPriceAfterDiscount - downPaymentAmount - receiptPaymentAmount;
 
   const totalQuarters = years * 4;
   const quartersBeforeReceipt = Math.floor(receiptAfterMonths / 3);
@@ -103,7 +102,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans flex dir-rtl" dir="rtl">
       
-      {/* Sidebar - القائمة الجانبية للتنقل جوة الـ CRM */}
+      {/* Sidebar */}
       <aside className="w-64 bg-slate-900 border-l border-slate-800 p-4 flex flex-col justify-between hidden md:flex">
         <div>
           <div className="flex items-center gap-3 px-2 py-4 border-b border-slate-800 mb-6">
@@ -149,8 +148,6 @@ export default function Home() {
 
       {/* Main Content Area */}
       <main className="flex-1 overflow-y-auto p-4 md:p-8">
-        
-        {/* Header - الشريط العلوي */}
         <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-800">
           <div>
             <h2 className="text-xl font-bold text-slate-100">
@@ -166,14 +163,12 @@ export default function Home() {
           </div>
         </div>
 
-        {/* TAB 1: CALCULATOR */}
+        {/* CALCULATOR TAB */}
         {activeTab === 'calculator' && (
           <div className="max-w-5xl mx-auto space-y-6">
-            
-            {/* بيانات العميل للحاسبة */}
             <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 flex flex-col md:flex-row gap-4 items-center justify-between">
               <div className="w-full md:w-1/2">
-                <label className="block text-xs text-slate-400 mb-1">اسم العميل (ليظهر في عرض السعر):</label>
+                <label className="block text-xs text-slate-400 mb-1">اسم العميل:</label>
                 <input 
                   type="text" 
                   placeholder="أدخل اسم العميل..." 
@@ -194,9 +189,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* أدوات الحاسبة */}
             <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
-              
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-slate-800 pb-4 gap-4">
                 <div className="flex items-center gap-3">
                   <label className="text-xs text-slate-400 font-bold">المشروع المحدد:</label>
@@ -212,7 +205,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* مدخلات المساحات */}
               <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700/60 mb-6">
                 <h3 className="text-xs font-bold text-slate-300 mb-3">📐 تفاصيل المساحات (م²) ونسب الملحقات</h3>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-sm mb-3">
@@ -254,7 +246,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* مدخلات الشروط */}
               <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700/60 mb-6">
                 <h3 className="text-xs font-bold text-slate-300 mb-3">⚙️ شروط الدفع والخصومات</h3>
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-xs">
@@ -281,9 +272,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* الكارت المصدر كصورة */}
               <div ref={cardRef} className="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-6">
-                
                 <div className="flex justify-between items-center border-b border-slate-800 pb-3">
                   <div>
                     {clientName && (
@@ -372,10 +361,8 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-
               </div>
 
-              {/* زرار تحميل الصورة - أصبح بالأسفل بعد الكارت */}
               <div className="mt-6 flex justify-end">
                 <button
                   onClick={handleDownloadImage}
@@ -384,30 +371,31 @@ export default function Home() {
                   📥 تحميل كارت العرض للعميل (صورة)
                 </button>
               </div>
-
             </div>
           </div>
         )}
 
-        {/* TAB 2: LEADS (إدارة العملاء) */}
+        {/* LEADS TAB */}
         {activeTab === 'leads' && (
-          <div className="max-w-5xl mx-auto bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center">
-            <h3 className="text-lg font-bold text-blue-400 mb-2">قسم إدارة سجلات العملاء (Leads Management)</h3>
-            <p className="text-slate-400 text-xs mb-6">هنا هنبني الجدول الخاص بإضافة وتتبع العملاء ومراحل المكالمات</p>
-            <div className="p-8 border border-dashed border-slate-800 rounded-xl text-slate-500 text-xs">
-              جاهز لبناء سكشن التسجيل وحفظ البيانات في التحديث القادم 🚀
+          <div className="max-w-5xl mx-auto bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center space-y-4">
+            <h3 className="text-lg font-bold text-blue-400">قسم إدارة سجلات العملاء (Leads Management)</h3>
+            <p className="text-slate-400 text-xs">هنا سيتم إضافة وتتبع العملاء ومراحل التواصل والمتابعة (Follow-up)</p>
+            <div className="p-12 border border-dashed border-slate-800 rounded-xl text-slate-500 text-xs">
+              🚧 جاهز لبناء السيكشن واستقبال البيانات 🚀
             </div>
           </div>
         )}
 
-        {/* TAB 3: INVENTORY (قائمة الأسعار) */}
+        {/* INVENTORY TAB */}
         {activeTab === 'inventory' && (
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-4">
             {PROJECTS_DATA.map((proj) => (
               <div key={proj.id} className="bg-slate-900 border border-slate-800 p-4 rounded-xl flex justify-between items-center">
                 <div>
                   <h4 className="font-bold text-sm text-blue-400">{proj.name}</h4>
-                  <p className="text-xs text-slate-400 mt-1">سعر المتر الافتراضي: <span className="text-white font-bold">{proj.defaultPrice.toLocaleString()} ج.م</span></p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    سعر المتر الافتراضي: <span className="text-white font-bold">{proj.defaultPrice.toLocaleString()} ج.م</span>
+                  </p>
                 </div>
                 <button 
                   onClick={() => {
@@ -424,7 +412,6 @@ export default function Home() {
         )}
 
       </main>
-
     </div>
   );
 }
