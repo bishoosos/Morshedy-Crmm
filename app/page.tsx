@@ -56,7 +56,6 @@ export default function Home() {
   const [downPaymentPercent, setDownPaymentPercent] = useState(5);
   const [receiptPaymentPercent, setReceiptPaymentPercent] = useState(10);
   
-  // الخيار الجديد: تحديد وحدة الاستلام وقيمتها
   const [receiptUnit, setReceiptUnit] = useState<'months' | 'years'>('months');
   const [receiptValue, setReceiptValue] = useState(10);
 
@@ -80,7 +79,6 @@ export default function Home() {
     }
   };
 
-  // تحويل فترة الاستلام لشهر تلقائياً في جميع الحسابات
   const receiptAfterMonths = receiptUnit === 'years' ? receiptValue * 12 : receiptValue;
 
   const effectiveArea = area + (roofArea * (roofRatio / 100)) + (gardenArea * (gardenRatio / 100)) + (terraceArea * (terraceRatio / 100));
@@ -91,8 +89,12 @@ export default function Home() {
   const downPaymentAmount = totalPriceBeforeDiscount * (downPaymentPercent / 100);
   const receiptPaymentAmount = totalPriceBeforeDiscount * (receiptPaymentPercent / 100);
 
+  // المتبقي للأقساط بعد خصم التعاقد والاستلام والخصم
   const remainingTotal = totalPriceBeforeDiscount - downPaymentAmount - receiptPaymentAmount - discountAmount;
+  
+  // وديعة الصيانة الإجمالية (10%) والإجمالي بعد الصيانة
   const maintenanceAmount = totalPriceAfterDiscount * 0.10;
+  const totalPriceWithMaintenance = totalPriceAfterDiscount + maintenanceAmount;
 
   const totalQuarters = years * 4;
   const quartersBeforeReceipt = Math.floor(receiptAfterMonths / 3);
@@ -108,7 +110,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-slate-100 text-slate-800 font-sans flex dir-rtl" dir="rtl">
       
-      {/* Sidebar - القائمة الجانبية */}
+      {/* Sidebar */}
       <aside className="w-64 bg-white border-l border-slate-200 p-4 flex flex-col justify-between hidden md:flex shadow-sm">
         <div>
           <div className="flex items-center gap-3 px-2 py-4 border-b border-slate-100 mb-6">
@@ -268,7 +270,6 @@ export default function Home() {
                     <input type="number" value={receiptPaymentPercent} onChange={(e) => setReceiptPaymentPercent(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded p-2 text-slate-800 font-semibold" />
                   </div>
 
-                  {/* خانة مدة الاستلام المحدثة بتبديل شهر/سنة */}
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <label className="text-purple-700 font-bold text-[11px]">الاستلام بعد:</label>
@@ -329,30 +330,44 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 grid grid-cols-2 md:grid-cols-6 gap-2 text-center">
+                {/* كروت التفاصيل المالية + إضافة خانة المتبقي للأقساط وإجمالي الصيانة */}
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2 text-center">
                   <div>
-                    <span className="text-[10px] text-slate-500 block">الإجمالي قبل الخصم</span>
+                    <span className="text-[10px] text-slate-500 block">قبل الخصم</span>
                     <span className="text-xs font-bold text-slate-400 line-through">{Math.round(totalPriceBeforeDiscount).toLocaleString()} ج.م</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-emerald-600 block font-semibold">مبلغ الخصم ({discountPercent}%)</span>
+                    <span className="text-[10px] text-emerald-600 block font-semibold">الخصم ({discountPercent}%)</span>
                     <span className="text-xs font-bold text-emerald-600">-{Math.round(discountAmount).toLocaleString()} ج.م</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-emerald-700 block font-bold">الإجمالي بعد الخصم</span>
-                    <span className="text-sm font-extrabold text-emerald-700">{Math.round(totalPriceAfterDiscount).toLocaleString()} ج.م</span>
+                    <span className="text-[10px] text-emerald-700 block font-bold">السعر بعد الخصم</span>
+                    <span className="text-xs font-extrabold text-emerald-700">{Math.round(totalPriceAfterDiscount).toLocaleString()} ج.م</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-blue-600 block font-semibold">مقدم التعاقد ({downPaymentPercent}%)</span>
+                    <span className="text-[10px] text-blue-600 block font-semibold">التعاقد ({downPaymentPercent}%)</span>
                     <span className="text-xs font-bold text-blue-600">{Math.round(downPaymentAmount).toLocaleString()} ج.م</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-purple-600 block font-semibold">دفعة الاستلام ({receiptPaymentPercent}%)</span>
+                    <span className="text-[10px] text-purple-600 block font-semibold">الاستلام ({receiptPaymentPercent}%)</span>
                     <span className="text-xs font-bold text-purple-600">{Math.round(receiptPaymentAmount).toLocaleString()} ج.م</span>
                   </div>
+
+                  {/* الخانة الراجعة: المتبقي الموزع على الأقساط */}
+                  <div className="bg-orange-50 border border-orange-200 rounded-lg p-1">
+                    <span className="text-[10px] text-orange-700 block font-bold">المتبقي للأقساط</span>
+                    <span className="text-xs font-extrabold text-orange-800">{Math.round(remainingTotal).toLocaleString()} ج.م</span>
+                  </div>
+
                   <div>
-                    <span className="text-[10px] text-amber-600 block font-semibold">المتبقي للتقسيط</span>
-                    <span className="text-xs font-bold text-amber-600">{Math.round(remainingTotal).toLocaleString()} ج.م</span>
+                    <span className="text-[10px] text-amber-600 block font-semibold">الوديعة (10%)</span>
+                    <span className="text-xs font-bold text-amber-600">{Math.round(maintenanceAmount).toLocaleString()} ج.م</span>
+                  </div>
+                  
+                  {/* الإجمالي الشامل بعد الصيانة */}
+                  <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-1">
+                    <span className="text-[10px] text-indigo-700 block font-extrabold">بعد الصيانة</span>
+                    <span className="text-xs font-extrabold text-indigo-900">{Math.round(totalPriceWithMaintenance).toLocaleString()} ج.م</span>
                   </div>
                 </div>
 
@@ -362,13 +377,17 @@ export default function Home() {
                       <span className="font-bold text-blue-700 text-xs">النظام الأول: أقساط ربع سنوية متساوية</span>
                       <span className="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold">كل 3 شهور</span>
                     </div>
-                    <div className="grid grid-cols-3 gap-2 text-center mt-3 bg-white p-3 rounded-lg border border-slate-100 text-xs">
+                    <div className="grid grid-cols-4 gap-2 text-center mt-3 bg-white p-3 rounded-lg border border-slate-100 text-xs">
                       <div>
-                        <span className="text-slate-500 block text-[10px]">إجمالي الأقساط</span>
+                        <span className="text-slate-500 block text-[10px]">المتبقي للتقسيط</span>
+                        <span className="font-bold text-xs text-orange-700">{Math.round(remainingTotal).toLocaleString()} ج.م</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-500 block text-[10px]">عدد الأقساط</span>
                         <span className="font-bold text-xs text-slate-800">{totalQuarters} قسط</span>
                       </div>
                       <div>
-                        <span className="text-slate-500 block text-[10px]">قيمة القسط الربع سنوي</span>
+                        <span className="text-slate-500 block text-[10px]">القسط الربع سنوي</span>
                         <span className="font-bold text-xs text-blue-600">{Math.round(quarterlyInstallmentVal).toLocaleString()} ج.م</span>
                       </div>
                       <div>
@@ -397,8 +416,8 @@ export default function Home() {
                         <span className="font-bold text-xs text-slate-800">{Math.round(receiptPaymentAmount).toLocaleString()} ج.م</span>
                       </div>
                       <div>
-                        <span className="text-slate-500 block text-[10px]">وديعة الصيانة (10% بعد الخصم)</span>
-                        <span className="font-bold text-xs text-amber-600">{Math.round(maintenanceAmount).toLocaleString()} ج.م</span>
+                        <span className="text-slate-500 block text-[10px]">الإجمالي شامل الصيانة</span>
+                        <span className="font-bold text-xs text-indigo-700">{Math.round(totalPriceWithMaintenance).toLocaleString()} ج.م</span>
                       </div>
                     </div>
                   </div>
