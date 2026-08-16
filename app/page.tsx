@@ -89,10 +89,8 @@ export default function Home() {
   const downPaymentAmount = totalPriceBeforeDiscount * (downPaymentPercent / 100);
   const receiptPaymentAmount = totalPriceBeforeDiscount * (receiptPaymentPercent / 100);
 
-  // المتبقي للأقساط بعد خصم التعاقد والاستلام والخصم
   const remainingTotal = totalPriceBeforeDiscount - downPaymentAmount - receiptPaymentAmount - discountAmount;
   
-  // وديعة الصيانة الإجمالية (10%) والإجمالي بعد الصيانة
   const maintenanceAmount = totalPriceAfterDiscount * 0.10;
   const totalPriceWithMaintenance = totalPriceAfterDiscount + maintenanceAmount;
 
@@ -110,8 +108,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-slate-100 text-slate-800 font-sans flex flex-col md:flex-row w-full max-w-full overflow-x-hidden" dir="rtl">
       
-      {/* Sidebar - للتنقل في الموبايل وسطح المكتب */}
-      <aside className="w-full md:w-64 bg-white border-b md:border-b-0 md:border-l border-slate-200 p-3 md:p-4 flex flex-col justify-between shrink-0 shadow-xs">
+      {/* Sidebar */}
+      <aside className="w-full md:w-64 bg-white border-b md:border-b-0 md:border-l border-slate-200 p-3 md:p-4 flex flex-col justify-between shrink-0">
         <div>
           <div className="flex items-center justify-between md:justify-start gap-3 px-2 py-2 md:py-4 border-b border-slate-100 mb-3 md:mb-6">
             <div className="flex items-center gap-2">
@@ -127,7 +125,7 @@ export default function Home() {
             <button
               onClick={() => setActiveTab('calculator')}
               className={`whitespace-nowrap flex-1 md:flex-none flex items-center justify-center md:justify-start gap-2 px-3 md:px-4 py-2 md:py-3 rounded-xl text-[11px] md:text-xs font-bold transition ${
-                activeTab === 'calculator' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20' : 'text-slate-600 hover:bg-slate-50 bg-slate-50 md:bg-transparent'
+                activeTab === 'calculator' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-600 bg-slate-50 md:bg-transparent'
               }`}
             >
               📊 حاسبة العروض
@@ -135,7 +133,7 @@ export default function Home() {
             <button
               onClick={() => setActiveTab('leads')}
               className={`whitespace-nowrap flex-1 md:flex-none flex items-center justify-center md:justify-start gap-2 px-3 md:px-4 py-2 md:py-3 rounded-xl text-[11px] md:text-xs font-bold transition ${
-                activeTab === 'leads' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20' : 'text-slate-600 hover:bg-slate-50 bg-slate-50 md:bg-transparent'
+                activeTab === 'leads' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-600 bg-slate-50 md:bg-transparent'
               }`}
             >
               👥 إدارة العملاء
@@ -143,7 +141,7 @@ export default function Home() {
             <button
               onClick={() => setActiveTab('inventory')}
               className={`whitespace-nowrap flex-1 md:flex-none flex items-center justify-center md:justify-start gap-2 px-3 md:px-4 py-2 md:py-3 rounded-xl text-[11px] md:text-xs font-bold transition ${
-                activeTab === 'inventory' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20' : 'text-slate-600 hover:bg-slate-50 bg-slate-50 md:bg-transparent'
+                activeTab === 'inventory' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-600 bg-slate-50 md:bg-transparent'
               }`}
             >
               🏘️ المشاريع
@@ -156,8 +154,8 @@ export default function Home() {
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto p-3 sm:p-5 md:p-8 bg-slate-100 w-full max-w-full box-border">
+      {/* Main Content */}
+      <main className="flex-1 p-3 sm:p-5 md:p-8 bg-slate-100 w-full max-w-full overflow-x-hidden">
         <div className="flex justify-between items-center mb-4 md:mb-6 pb-3 border-b border-slate-200">
           <div>
             <h2 className="text-base sm:text-xl font-bold text-slate-800">
@@ -175,7 +173,7 @@ export default function Home() {
 
         {/* CALCULATOR TAB */}
         {activeTab === 'calculator' && (
-          <div className="max-w-5xl mx-auto space-y-4 sm:space-y-6">
+          <div className="max-w-5xl mx-auto space-y-4 sm:space-y-6 w-full">
             <div className="bg-white border border-slate-200 rounded-2xl p-3.5 sm:p-4 flex flex-col md:flex-row gap-3 md:gap-4 items-center justify-between shadow-xs">
               <div className="w-full md:w-1/2">
                 <label className="block text-xs text-slate-600 font-medium mb-1">اسم العميل:</label>
@@ -218,46 +216,46 @@ export default function Home() {
               {/* تفاصيل المساحات والنسب */}
               <div className="bg-slate-50 p-3 sm:p-4 rounded-xl border border-slate-200">
                 <h3 className="text-xs font-bold text-slate-700 mb-3">📐 تفاصيل المساحات (م²) ونسب الملحقات</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 sm:gap-3 text-sm mb-3">
-                  <div>
+                <div className="flex flex-wrap gap-2.5 sm:gap-3 text-sm mb-3">
+                  <div className="flex-1 min-w-[120px]">
                     <label className="block text-[11px] text-slate-500 mb-1">الشقة:</label>
                     <input type="number" value={area} onChange={(e) => setArea(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 font-bold text-xs" />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-[120px]">
                     <label className="block text-[11px] text-slate-500 mb-1">الروف:</label>
                     <input type="number" value={roofArea} onChange={(e) => setRoofArea(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 text-xs font-semibold" />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-[120px]">
                     <label className="block text-[11px] text-slate-500 mb-1">الحديقة:</label>
                     <input type="number" value={gardenArea} onChange={(e) => setGardenArea(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 text-xs font-semibold" />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-[120px]">
                     <label className="block text-[11px] text-slate-500 mb-1">التراس:</label>
                     <input type="number" value={terraceArea} onChange={(e) => setTerraceArea(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded-lg p-2 text-slate-800 text-xs font-semibold" />
                   </div>
-                  <div className="col-span-2 sm:col-span-1">
+                  <div className="w-full sm:flex-1 sm:min-w-[140px]">
                     <label className="block text-[11px] text-blue-600 mb-1 font-bold">سعر المتر (جنية):</label>
                     <input type="number" value={pricePerMeter} onChange={(e) => setPricePerMeter(Number(e.target.value))} className="w-full bg-white border border-blue-300 rounded-lg p-2 text-blue-700 font-bold text-xs" />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 border-t border-slate-200 text-xs">
-                  <div className="flex items-center justify-between bg-white p-1.5 rounded border border-slate-100 sm:border-0 sm:p-0">
+                <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-200 text-xs">
+                  <div className="flex-1 min-w-[140px] flex items-center justify-between bg-white p-2 rounded border border-slate-200">
                     <span className="text-slate-600">نسبة الروف: </span>
                     <div>
-                      <input type="number" value={roofRatio} onChange={(e) => setRoofRatio(Number(e.target.value))} className="w-12 bg-white sm:bg-slate-50 border border-slate-200 rounded p-1 text-center text-amber-600 font-bold" /> %
+                      <input type="number" value={roofRatio} onChange={(e) => setRoofRatio(Number(e.target.value))} className="w-12 bg-slate-50 border border-slate-200 rounded p-1 text-center text-amber-600 font-bold" /> %
                     </div>
                   </div>
-                  <div className="flex items-center justify-between bg-white p-1.5 rounded border border-slate-100 sm:border-0 sm:p-0">
+                  <div className="flex-1 min-w-[140px] flex items-center justify-between bg-white p-2 rounded border border-slate-200">
                     <span className="text-slate-600">نسبة الحديقة: </span>
                     <div>
-                      <input type="number" value={gardenRatio} onChange={(e) => setGardenRatio(Number(e.target.value))} className="w-12 bg-white sm:bg-slate-50 border border-slate-200 rounded p-1 text-center text-amber-600 font-bold" /> %
+                      <input type="number" value={gardenRatio} onChange={(e) => setGardenRatio(Number(e.target.value))} className="w-12 bg-slate-50 border border-slate-200 rounded p-1 text-center text-amber-600 font-bold" /> %
                     </div>
                   </div>
-                  <div className="flex items-center justify-between bg-white p-1.5 rounded border border-slate-100 sm:border-0 sm:p-0">
+                  <div className="flex-1 min-w-[140px] flex items-center justify-between bg-white p-2 rounded border border-slate-200">
                     <span className="text-slate-600">نسبة التراس: </span>
                     <div>
-                      <input type="number" value={terraceRatio} onChange={(e) => setTerraceRatio(Number(e.target.value))} className="w-12 bg-white sm:bg-slate-50 border border-slate-200 rounded p-1 text-center text-amber-600 font-bold" /> %
+                      <input type="number" value={terraceRatio} onChange={(e) => setTerraceRatio(Number(e.target.value))} className="w-12 bg-slate-50 border border-slate-200 rounded p-1 text-center text-amber-600 font-bold" /> %
                     </div>
                   </div>
                 </div>
@@ -266,21 +264,21 @@ export default function Home() {
               {/* شروط الدفع والخصومات */}
               <div className="bg-slate-50 p-3 sm:p-4 rounded-xl border border-slate-200">
                 <h3 className="text-xs font-bold text-slate-700 mb-3">⚙️ شروط الدفع والخصومات</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 sm:gap-3 text-xs">
-                  <div>
+                <div className="flex flex-wrap gap-2.5 sm:gap-3 text-xs">
+                  <div className="flex-1 min-w-[100px]">
                     <label className="block text-slate-500 mb-1">السنوات:</label>
                     <input type="number" value={years} onChange={(e) => setYears(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded p-2 text-slate-800 font-bold" />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-[100px]">
                     <label className="block text-slate-500 mb-1">التعاقد (%):</label>
                     <input type="number" value={downPaymentPercent} onChange={(e) => setDownPaymentPercent(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded p-2 text-slate-800 font-semibold" />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-[100px]">
                     <label className="block text-slate-500 mb-1">الاستلام (%):</label>
                     <input type="number" value={receiptPaymentPercent} onChange={(e) => setReceiptPaymentPercent(Number(e.target.value))} className="w-full bg-white border border-slate-200 rounded p-2 text-slate-800 font-semibold" />
                   </div>
 
-                  <div>
+                  <div className="flex-1 min-w-[130px]">
                     <div className="flex items-center justify-between mb-1">
                       <label className="text-purple-700 font-bold text-[10px]">الاستلام بعد:</label>
                       <div className="flex bg-slate-200 p-0.5 rounded text-[9px]">
@@ -288,7 +286,7 @@ export default function Home() {
                           type="button"
                           onClick={() => setReceiptUnit('months')}
                           className={`px-1 py-0.5 rounded font-bold transition ${
-                            receiptUnit === 'months' ? 'bg-purple-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                            receiptUnit === 'months' ? 'bg-purple-600 text-white' : 'text-slate-600'
                           }`}
                         >
                           شهر
@@ -297,7 +295,7 @@ export default function Home() {
                           type="button"
                           onClick={() => setReceiptUnit('years')}
                           className={`px-1 py-0.5 rounded font-bold transition ${
-                            receiptUnit === 'years' ? 'bg-purple-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                            receiptUnit === 'years' ? 'bg-purple-600 text-white' : 'text-slate-600'
                           }`}
                         >
                           سنة
@@ -317,14 +315,14 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="col-span-2 sm:col-span-1">
+                  <div className="flex-1 min-w-[110px]">
                     <label className="block text-emerald-700 mb-1 font-semibold">نسبة الخصم (%):</label>
                     <input type="number" value={discountPercent} onChange={(e) => setDiscountPercent(Number(e.target.value))} className="w-full bg-white border border-emerald-200 rounded p-2 text-emerald-700 font-bold" />
                   </div>
                 </div>
               </div>
 
-              {/* CARD TO GENERATE IMAGE - كارت تفاصيل المعاينة والتصدير */}
+              {/* CARD TO GENERATE IMAGE */}
               <div ref={cardRef} className="bg-white p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-md space-y-4 sm:space-y-6 w-full max-w-full overflow-hidden">
                 <div className="flex justify-between items-start border-b border-slate-100 pb-3 gap-2">
                   <div>
@@ -340,42 +338,39 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* كروت التفاصيل المالية المتجاوبة للموبايل */}
-                <div className="bg-slate-50 p-3 sm:p-4 rounded-xl border border-slate-200 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 text-center">
-                  <div className="bg-white sm:bg-transparent p-1.5 rounded sm:p-0 border border-slate-100 sm:border-0">
+                {/* كروت الحسابات بمرونة Flexbox لتفادي الخروج من الشاشة */}
+                <div className="bg-slate-50 p-3 sm:p-4 rounded-xl border border-slate-200 flex flex-wrap gap-2 text-center justify-between">
+                  <div className="flex-1 min-w-[100px] bg-white p-2 rounded border border-slate-100">
                     <span className="text-[9px] sm:text-[10px] text-slate-500 block">قبل الخصم</span>
-                    <span className="text-[11px] sm:text-xs font-bold text-slate-400 line-through">{Math.round(totalPriceBeforeDiscount).toLocaleString()} ج.م</span>
+                    <span className="text-[11px] sm:text-xs font-bold text-slate-400 line-through">{Math.round(totalPriceBeforeDiscount).toLocaleString()}</span>
                   </div>
-                  <div className="bg-white sm:bg-transparent p-1.5 rounded sm:p-0 border border-slate-100 sm:border-0">
+                  <div className="flex-1 min-w-[100px] bg-white p-2 rounded border border-slate-100">
                     <span className="text-[9px] sm:text-[10px] text-emerald-600 block font-semibold">الخصم ({discountPercent}%)</span>
-                    <span className="text-[11px] sm:text-xs font-bold text-emerald-600">-{Math.round(discountAmount).toLocaleString()} ج.م</span>
+                    <span className="text-[11px] sm:text-xs font-bold text-emerald-600">-{Math.round(discountAmount).toLocaleString()}</span>
                   </div>
-                  <div className="bg-white sm:bg-transparent p-1.5 rounded sm:p-0 border border-slate-100 sm:border-0">
+                  <div className="flex-1 min-w-[100px] bg-white p-2 rounded border border-slate-100">
                     <span className="text-[9px] sm:text-[10px] text-emerald-700 block font-bold">بعد الخصم</span>
-                    <span className="text-[11px] sm:text-xs font-extrabold text-emerald-700">{Math.round(totalPriceAfterDiscount).toLocaleString()} ج.م</span>
+                    <span className="text-[11px] sm:text-xs font-extrabold text-emerald-700">{Math.round(totalPriceAfterDiscount).toLocaleString()}</span>
                   </div>
-                  <div className="bg-white sm:bg-transparent p-1.5 rounded sm:p-0 border border-slate-100 sm:border-0">
+                  <div className="flex-1 min-w-[100px] bg-white p-2 rounded border border-slate-100">
                     <span className="text-[9px] sm:text-[10px] text-blue-600 block font-semibold">التعاقد ({downPaymentPercent}%)</span>
-                    <span className="text-[11px] sm:text-xs font-bold text-blue-600">{Math.round(downPaymentAmount).toLocaleString()} ج.م</span>
+                    <span className="text-[11px] sm:text-xs font-bold text-blue-600">{Math.round(downPaymentAmount).toLocaleString()}</span>
                   </div>
-                  <div className="bg-white sm:bg-transparent p-1.5 rounded sm:p-0 border border-slate-100 sm:border-0">
+                  <div className="flex-1 min-w-[100px] bg-white p-2 rounded border border-slate-100">
                     <span className="text-[9px] sm:text-[10px] text-purple-600 block font-semibold">الاستلام ({receiptPaymentPercent}%)</span>
-                    <span className="text-[11px] sm:text-xs font-bold text-purple-600">{Math.round(receiptPaymentAmount).toLocaleString()} ج.م</span>
+                    <span className="text-[11px] sm:text-xs font-bold text-purple-600">{Math.round(receiptPaymentAmount).toLocaleString()}</span>
                   </div>
-
-                  <div className="bg-orange-50 border border-orange-200 rounded-lg p-1.5 sm:p-1 col-span-1">
+                  <div className="flex-1 min-w-[110px] bg-orange-50 border border-orange-200 p-2 rounded">
                     <span className="text-[9px] sm:text-[10px] text-orange-700 block font-bold">المتبقي للأقساط</span>
-                    <span className="text-[11px] sm:text-xs font-extrabold text-orange-800">{Math.round(remainingTotal).toLocaleString()} ج.م</span>
+                    <span className="text-[11px] sm:text-xs font-extrabold text-orange-800">{Math.round(remainingTotal).toLocaleString()}</span>
                   </div>
-
-                  <div className="bg-white sm:bg-transparent p-1.5 rounded sm:p-0 border border-slate-100 sm:border-0">
+                  <div className="flex-1 min-w-[100px] bg-white p-2 rounded border border-slate-100">
                     <span className="text-[9px] sm:text-[10px] text-amber-600 block font-semibold">الوديعة (10%)</span>
-                    <span className="text-[11px] sm:text-xs font-bold text-amber-600">{Math.round(maintenanceAmount).toLocaleString()} ج.م</span>
+                    <span className="text-[11px] sm:text-xs font-bold text-amber-600">{Math.round(maintenanceAmount).toLocaleString()}</span>
                   </div>
-                  
-                  <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-1.5 sm:p-1 col-span-1">
+                  <div className="flex-1 min-w-[110px] bg-indigo-50 border border-indigo-200 p-2 rounded">
                     <span className="text-[9px] sm:text-[10px] text-indigo-700 block font-extrabold">بعد الصيانة</span>
-                    <span className="text-[11px] sm:text-xs font-extrabold text-indigo-900">{Math.round(totalPriceWithMaintenance).toLocaleString()} ج.م</span>
+                    <span className="text-[11px] sm:text-xs font-extrabold text-indigo-900">{Math.round(totalPriceWithMaintenance).toLocaleString()}</span>
                   </div>
                 </div>
 
@@ -386,20 +381,20 @@ export default function Home() {
                       <span className="font-bold text-blue-700 text-xs">النظام الأول: أقساط ربع سنوية متساوية</span>
                       <span className="text-[9px] sm:text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded font-bold">كل 3 شهور</span>
                     </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center mt-3 bg-white p-2.5 sm:p-3 rounded-lg border border-slate-100 text-xs">
-                      <div className="p-1">
+                    <div className="flex flex-wrap gap-2 text-center mt-3 bg-white p-2.5 sm:p-3 rounded-lg border border-slate-100 text-xs">
+                      <div className="flex-1 min-w-[120px] p-1">
                         <span className="text-slate-500 block text-[9px] sm:text-[10px]">المتبقي للتقسيط</span>
                         <span className="font-bold text-[11px] sm:text-xs text-orange-700">{Math.round(remainingTotal).toLocaleString()} ج.م</span>
                       </div>
-                      <div className="p-1">
+                      <div className="flex-1 min-w-[100px] p-1">
                         <span className="text-slate-500 block text-[9px] sm:text-[10px]">عدد الأقساط</span>
                         <span className="font-bold text-[11px] sm:text-xs text-slate-800">{totalQuarters} قسط</span>
                       </div>
-                      <div className="p-1">
+                      <div className="flex-1 min-w-[120px] p-1">
                         <span className="text-slate-500 block text-[9px] sm:text-[10px]">القسط الربع سنوي</span>
                         <span className="font-bold text-[11px] sm:text-xs text-blue-600">{Math.round(quarterlyInstallmentVal).toLocaleString()} ج.م</span>
                       </div>
-                      <div className="p-1">
+                      <div className="flex-1 min-w-[120px] p-1">
                         <span className="text-slate-500 block text-[9px] sm:text-[10px]">أقساط قبل الاستلام</span>
                         <span className="font-bold text-[11px] sm:text-xs text-amber-600">{quartersBeforeReceipt} أقساط</span>
                       </div>
@@ -412,20 +407,20 @@ export default function Home() {
                       <span className="font-bold text-purple-700 text-xs">النظام الثاني: أقساط شهرية + دفعات سنوية</span>
                       <span className="text-[9px] sm:text-[10px] bg-purple-100 text-purple-700 px-2 py-0.5 rounded font-bold">مزدوج</span>
                     </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center mt-3 bg-white p-2.5 sm:p-3 rounded-lg border border-slate-100 text-xs">
-                      <div className="p-1">
+                    <div className="flex flex-wrap gap-2 text-center mt-3 bg-white p-2.5 sm:p-3 rounded-lg border border-slate-100 text-xs">
+                      <div className="flex-1 min-w-[130px] p-1">
                         <span className="text-slate-500 block text-[9px] sm:text-[10px]">القسط الشهري ({totalMonths} قسط)</span>
                         <span className="font-bold text-[11px] sm:text-xs text-purple-600">{Math.round(monthlyInstallmentVal).toLocaleString()} ج.م</span>
                       </div>
-                      <div className="p-1">
+                      <div className="flex-1 min-w-[130px] p-1">
                         <span className="text-slate-500 block text-[9px] sm:text-[10px]">القسط السنوي ({years} أقساط)</span>
                         <span className="font-bold text-[11px] sm:text-xs text-purple-700">{Math.round(yearlyInstallmentVal).toLocaleString()} ج.م</span>
                       </div>
-                      <div className="p-1">
+                      <div className="flex-1 min-w-[130px] p-1">
                         <span className="text-slate-500 block text-[9px] sm:text-[10px]">دفعة الاستلام ({receiptAfterMonths} شهر)</span>
                         <span className="font-bold text-[11px] sm:text-xs text-slate-800">{Math.round(receiptPaymentAmount).toLocaleString()} ج.م</span>
                       </div>
-                      <div className="p-1">
+                      <div className="flex-1 min-w-[130px] p-1">
                         <span className="text-slate-500 block text-[9px] sm:text-[10px]">الإجمالي شامل الصيانة</span>
                         <span className="font-bold text-[11px] sm:text-xs text-indigo-700">{Math.round(totalPriceWithMaintenance).toLocaleString()} ج.م</span>
                       </div>
@@ -437,7 +432,7 @@ export default function Home() {
               <div className="mt-4 sm:mt-6 flex justify-end">
                 <button
                   onClick={handleDownloadImage}
-                  className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-6 py-3.5 rounded-xl shadow-md shadow-emerald-600/20 transition duration-200 flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-6 py-3.5 rounded-xl shadow-md transition duration-200 flex items-center justify-center gap-2"
                 >
                   📥 تحميل كارت العرض للعميل (صورة)
                 </button>
@@ -451,7 +446,7 @@ export default function Home() {
 
         {/* INVENTORY TAB */}
         {activeTab === 'inventory' && (
-          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+          <div className="max-w-5xl mx-auto flex flex-col sm:grid sm:grid-cols-2 gap-3 sm:gap-4">
             {PROJECTS_DATA.map((proj) => (
               <div key={proj.id} className="bg-white border border-slate-200 p-3.5 sm:p-4 rounded-xl flex justify-between items-center shadow-xs">
                 <div>
