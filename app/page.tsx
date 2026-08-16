@@ -12,7 +12,7 @@ interface Project {
 }
 
 const PROJECTS_DATA: Project[] = [
-  { id: 'zahra', name: 'Zahra North Coast (زهرة)', defaultPrice: 111000, monthlyRatio: 25, yearlyRatio: 75 },
+  { id: 'zahra', name: 'Zahra North Coast (زهرة)', defaultPrice: 111000, monthlyRatio: 30, yearlyRatio: 70 },
   { id: 'one_katameya', name: 'One Katameya (وان قطامية)', defaultPrice: 72700, monthlyRatio: 30, yearlyRatio: 70 },
   { id: 'degla_landmarks', name: 'Degla Landmarks (دجلة لاند مارك)', defaultPrice: 52800, monthlyRatio: 30, yearlyRatio: 70 },
   { id: 'katameya_gate', name: 'Katameya Gate (قطامية جيت)', defaultPrice: 57800, monthlyRatio: 30, yearlyRatio: 70 },
@@ -99,11 +99,21 @@ export default function Home() {
   const quarterlyInstallmentVal = remainingTotal > 0 ? remainingTotal / (totalQuarters || 1) : 0;
 
   const totalMonths = years * 12;
-  const monthlyPool = remainingTotal * (selectedProject.monthlyRatio / 100);
-  const yearlyPool = remainingTotal * (selectedProject.yearlyRatio / 100);
+  // السطور الجديدة المطبقة لمنطق شيت الشركة الرسمي
+const totalBeforeDiscountRemaining = totalPriceBeforeDiscount - downPaymentAmount - receiptPaymentAmount;
 
-  const monthlyInstallmentVal = remainingTotal > 0 ? monthlyPool / (totalMonths || 1) : 0;
-  const yearlyInstallmentVal = remainingTotal > 0 ? yearlyPool / (years || 1) : 0;
+const monthlyPoolBeforeDiscount = totalBeforeDiscountRemaining * (selectedProject.monthlyRatio / 100);
+const yearlyPoolBeforeDiscount = totalBeforeDiscountRemaining * (selectedProject.yearlyRatio / 100);
+
+const monthlyDiscountPerTerm = discountAmount / (totalMonths || 1);
+
+const monthlyInstallmentVal = totalBeforeDiscountRemaining > 0 
+  ? (monthlyPoolBeforeDiscount / (totalMonths || 1)) - monthlyDiscountPerTerm 
+  : 0;
+
+const yearlyInstallmentVal = totalBeforeDiscountRemaining > 0 
+  ? (yearlyPoolBeforeDiscount / (years || 1)) 
+  : 0;
 
   return (
     <div className="min-h-screen bg-slate-100 text-slate-800 font-sans flex flex-col md:flex-row w-full max-w-full overflow-x-hidden" dir="rtl">
