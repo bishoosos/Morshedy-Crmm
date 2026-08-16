@@ -1,12 +1,10 @@
 
-
 'use client';
 
 import './globals.css';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 
-// مكون شاشة الترحيب الداخلي
 function WelcomeScreen({ onEnter }: { onEnter: (name: string) => void }) {
   const [nameInput, setNameInput] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -18,11 +16,11 @@ function WelcomeScreen({ onEnter }: { onEnter: (name: string) => void }) {
     setIsSubmitted(true);
     setTimeout(() => {
       onEnter(nameInput);
-    }, 2000);
+    }, 2500);
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/90 backdrop-blur-sm p-4 transition-opacity duration-500 overflow-hidden" dir="rtl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/90 backdrop-blur-sm p-4 transition-opacity duration-500" dir="rtl">
       <div className="bg-white p-6 md:p-8 rounded-3xl shadow-2xl max-w-md w-full mx-auto text-center transform transition-all relative overflow-hidden">
         
         {isSubmitted && (
@@ -33,7 +31,7 @@ function WelcomeScreen({ onEnter }: { onEnter: (name: string) => void }) {
               <div className="text-5xl mb-3 animate-bounce">😍</div>
             </div>
             <h3 className="text-base md:text-lg font-extrabold text-slate-800 mt-2 text-center">
-              منورة السيستم يا {nameInput}! ✨
+              منورة السيستم يا مريووم ✨
             </h3>
           </div>
         )}
@@ -43,10 +41,10 @@ function WelcomeScreen({ onEnter }: { onEnter: (name: string) => void }) {
         </div>
 
         <h2 className="text-lg md:text-xl font-extrabold text-slate-800 mb-2">
-         أهلاً بيكي فى معمار المرشدي 😍
+          أهلاً بيكي فى معمار المرشدي 😍
         </h2>
         <p className="text-xs text-slate-500 mb-6">
-         اكتبي اسمك عشان السيستم يشتغل
+           اكتبي اسمك عشان السيستم يشتغل
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -93,47 +91,39 @@ export default function RootLayout({
   if (!isMounted) {
     return (
       <html lang="ar" dir="rtl">
-        <head>
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        </head>
-        <body className="bg-slate-100 min-h-screen flex flex-col overflow-x-hidden"></body>
+        <body className="bg-slate-100 min-h-screen flex flex-col"></body>
       </html>
     );
   }
 
   return (
     <html lang="ar" dir="rtl">
-      <head>
-        {/* إجبار المتصفح على ملاءمة عرض الشاشة تماماً */}
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-      </head>
-      <body className="bg-slate-100 min-h-screen flex flex-col font-sans max-w-full overflow-x-hidden">
+      <body className="bg-slate-100 min-h-screen flex flex-col font-sans">
         {!userName && <WelcomeScreen onEnter={handleEnter} />}
 
-        {/* Header متجاوب */}
-        <header className="bg-white border-b border-slate-200 py-3 px-4 flex flex-row items-center justify-between shadow-xs sticky top-0 z-40 w-full">
-          <div className="flex items-center gap-2">
+        {/* الهيدر معدل ليكون متجاوباً تماماً مع الموبايل */}
+        <header className="bg-white border-b border-slate-200 py-3 px-4 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 shadow-xs sticky top-0 z-40">
+          <div className="flex items-center gap-4">
             <Image
               src="/logo.png"
               alt="Morshedy Group Logo"
-              width={180}
-              height={50}
-              className="h-9 md:h-12 w-auto object-contain"
+              width={220}
+              height={65}
+              className="h-10 md:h-12 w-auto object-contain"
               priority
             />
           </div>
-          <div className="text-left">
+          <div className="text-center sm:text-left">
             <span className="text-[10px] md:text-xs text-slate-500 font-semibold block">معمار المرشدي</span>
             <span className="text-xs md:text-sm text-blue-600 font-bold">
-              {userName ? `مرحباً، ${userName}` : 'بوابة المبيعات'}
+              {userName ? `مرحباً، ${userName}` : 'بوابة المبيعات الداخلية'}
             </span>
           </div>
         </header>
 
-        {/* الحاوية الرئيسية مع منع الخروج عن الشاشة */}
-        <main className="flex-1 w-full max-w-full overflow-x-hidden p-2 sm:p-4">
+        <div className="flex-1 p-2 md:p-4">
           {children}
-        </main>
+        </div>
       </body>
     </html>
   );
