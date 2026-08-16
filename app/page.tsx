@@ -346,6 +346,25 @@ const yearlyInstallmentVal = totalBeforeDiscountRemaining > 0
                     <span className="text-[10px] sm:text-xs text-slate-500 block">المساحة الإجمالية:</span>
                     <span className="text-sm sm:text-md font-bold text-slate-800">{effectiveArea.toFixed(1)} م²</span>
                   </div>
+                  {/* شريط المساحات والملحقات الجديد */}
+<div className="bg-slate-50 border border-slate-200 rounded-xl p-2.5 flex flex-wrap justify-between items-center text-xs gap-2 mt-4">
+  <div className="flex items-center gap-1">
+    <span className="text-slate-500">المساحة الإجمالية:</span>
+    <span className="font-bold text-slate-800">{area} م²</span>
+  </div>
+  <div className="flex items-center gap-1">
+    <span className="text-slate-500">الروف:</span>
+    <span className="font-bold text-slate-800">{roofArea > 0 ? `${roofArea} م² (${roofRatio}%)` : '-'}</span>
+  </div>
+  <div className="flex items-center gap-1">
+    <span className="text-slate-500">الحديقة:</span>
+    <span className="font-bold text-slate-800">{gardenArea > 0 ? `${gardenArea} م² (${gardenRatio}%)` : '-'}</span>
+  </div>
+  <div className="flex items-center gap-1">
+    <span className="text-slate-500">التراس:</span>
+    <span className="font-bold text-slate-800">{terraceArea > 0 ? `${terraceArea} م² (${terraceRatio}%)` : '-'}</span>
+  </div>
+</div>
                 </div>
 
                 {/* كروت الحسابات بمرونة Flexbox لتفادي الخروج من الشاشة */}
