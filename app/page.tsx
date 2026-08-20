@@ -1,5 +1,7 @@
 'use client';
+
 import LeadsSection from './components/LeadsSection';
+import ProjectExplorer from './components/ProjectExplorer';
 import React, { useState, useRef } from 'react';
 import { toPng } from 'html-to-image';
 
@@ -474,7 +476,8 @@ const yearlyInstallmentVal = totalBeforeDiscountRemaining > 0
         {activeTab === 'leads' && <LeadsSection />}
 
         {/* INVENTORY TAB */}
-        {activeTab === 'inventory' && (
+        
+        {activeTab === 'inventory' && ( 
           <div className="max-w-5xl mx-auto flex flex-col sm:grid sm:grid-cols-2 gap-3 sm:gap-4">
             {PROJECTS_DATA.map((proj) => (
               <div key={proj.id} className="bg-white border border-slate-200 p-3.5 sm:p-4 rounded-xl flex justify-between items-center shadow-xs">
